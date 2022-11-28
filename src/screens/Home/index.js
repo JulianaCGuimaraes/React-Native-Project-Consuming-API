@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Alert, Image, StyleSheet } from 'react-native';
+import { Alert, Image } from 'react-native';
 import {
     Container,
     Animation,
     Input,
     Button,
     ButtonText,
-    AddressArea,
+    TranslateArea,
     Text
 } from './styles';
-import logo from '../assets/logo.png';
-import api from '../services/api';
+// import logo from '../../assets/logo.png';
+import api from '../../services/api';
 
 export default function Home() {
     const [text, setText] = useState('');
@@ -18,12 +18,12 @@ export default function Home() {
 
     async function handleTranslate() {
         try {
-            const { status, data } = await api.get(`${text}/json/`);
+            const { status, data } = await api.get(`?text=${inputValue}`);
 
             if (status != 200 || data.erro) {
                 Alert.alert('Traduzir', 'Digite o texto em inglês.');
             } else {
-                setAddress(data);
+                setTranslate(data);
             }
 
         } catch (error) {
@@ -33,7 +33,7 @@ export default function Home() {
 
     async function handleLimpar() {
         setTranslate(null);
-        setCep('');
+        setText('');
     }
 
     return (
@@ -43,7 +43,7 @@ export default function Home() {
                 delay={100}
                 duration={1500}
             >
-                <Image style={styles.logo} source={logo} />
+                <Image source={''} />
             </Animation>
 
             <Animation
@@ -53,7 +53,8 @@ export default function Home() {
             >
                 {!translate &&
                     <Input
-                        keyboardType="numeric"
+                        class = 'inputValue'
+                        keyboardType="text"
                         maxLength={500}
                         onChangeText={setText}
                         onSubmitEditing={handleTranslate}
@@ -67,25 +68,17 @@ export default function Home() {
                     activeOpacity={0.8}
                     onPress={translate ? handleLimpar : handleTranslate}>
                     <ButtonText>
-                        {translate ? 'Limpar' : 'Traduzir'}
+                        {translate ? 'Limpar' : 'Translate'}
                     </ButtonText>
                 </Button>
             </Animation>
 
             {translate &&
-                <AddressArea>
+                <TranslateArea>
                     <Text>TEXT: {text}</Text>
-                    <Text>{translate.text}</Text>
-                </AddressArea>
+                    <Text>TRADUÇÃO: {translate}</Text>
+                </TranslateArea>
             }
         </Container>
     );
 }
-
-const styles = StyleSheet.create({
-    logo: {
-        width: '100%',
-        height: '40%',
-        top: '10px',
-    },
-});

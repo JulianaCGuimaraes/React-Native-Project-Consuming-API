@@ -41,7 +41,7 @@ export const ButtonText = styled.Text`
     text-transform: uppercase;
 `;
 
-export const AddressArea = styled.View`
+export const TranslateArea = styled.View`
     align-items: center;
     margin-top: 15px;
 `;
