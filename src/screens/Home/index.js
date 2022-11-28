@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
-import { Alert, Image } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import {
     Container,
     Animation,
     Input,
     Button,
     ButtonText,
-    TranslateArea,
-    Text
+    Text,
+    ProductArea
 } from './styles';
 // import logo from '../../assets/logo.png';
 import api from '../../services/api';
 
 export default function Home() {
-    const [text, setText] = useState('');
-    const [translate, setTranslate] = useState(null);
+    const [id, setId] = useState('');
+    const [product, setProduct] = useState(null);
 
-    async function handleTranslate() {
+    async function handleBuscar() {
         try {
-            const { status, data } = await api.get(`?text=${inputValue}`);
+            const { status, data } = await api.get(`/${id}`);
 
             if (status != 200 || data.erro) {
-                Alert.alert('Traduzir', 'Digite o texto em inglês.');
+                Alert.alert('Buscar', 'Digite um id válido.');
             } else {
-                setTranslate(data);
+                setProduct(data);
             }
 
         } catch (error) {
-            Alert.alert('Traduzir', 'Digite o texto em inglês.');
+            Alert.alert('Buscar', 'Digite um id válido.');
         }
     };
 
     async function handleLimpar() {
-        setTranslate(null);
+        setProduct(null);
         setText('');
     }
 
@@ -43,7 +43,7 @@ export default function Home() {
                 delay={100}
                 duration={1500}
             >
-                <Image source={''} />
+                <Text style={styles.topoTitulo}>Platzi Fake Store API</Text>
             </Animation>
 
             <Animation
@@ -51,34 +51,45 @@ export default function Home() {
                 delay={100}
                 duration={1500}
             >
-                {!translate &&
+                {!product &&
                     <Input
-                        class = 'inputValue'
-                        keyboardType="text"
-                        maxLength={500}
-                        onChangeText={setText}
-                        onSubmitEditing={handleTranslate}
+                        keyboardType="numeric"
+                        maxLength={300}
+                        onChangeText={setId}
+                        onSubmitEditing={handleBuscar}
                         placeholder="Digite o  texto que deseja traduzir"
                         placeholderTextColor="#2F48D4"
-                        value={text}
+                        value={id}
                     />
                 }
 
                 <Button
                     activeOpacity={0.8}
-                    onPress={translate ? handleLimpar : handleTranslate}>
+                    onPress={product ? handleLimpar : handleBuscar}>
                     <ButtonText>
-                        {translate ? 'Limpar' : 'Translate'}
+                        {product ? 'Limpar' : 'Buscar'}
                     </ButtonText>
                 </Button>
             </Animation>
 
-            {translate &&
-                <TranslateArea>
-                    <Text>TEXT: {text}</Text>
-                    <Text>TRADUÇÃO: {translate}</Text>
-                </TranslateArea>
+            {product &&
+                <ProductArea>
+                    <Text>ID: {id}</Text>
+                    <Text>TITLE: {product.title}</Text>
+                    <Text>PRICE: {product.price}</Text>
+                    <Text>DESCRIPTION: {product.description}</Text>
+                </ProductArea>
             }
         </Container>
     );
 }
+
+const styles = StyleSheet.create({
+    topoTitulo: { 
+        marginTop: 300,
+        fontSize: 20, 
+        fontWeight: "bold",
+        marginBottom: 10, 
+        color: '#fff', 
+        textAlign: 'center'}
+});

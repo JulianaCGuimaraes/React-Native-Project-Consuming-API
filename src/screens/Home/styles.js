@@ -3,7 +3,7 @@ import * as Animatable from 'react-native-animatable';
 
 export const Container = styled.View`
     align-items: center;
-    background-color: #2F48D4;
+    background-color: #121f3d;
     flex: 1;
     padding: 20px;
 `;
@@ -16,7 +16,7 @@ export const Animation = styled(Animatable.View)`
 export const Input = styled.TextInput`
     background-color: #FFF;
     border-radius: 5px;
-    color: #2F48D4;
+    color: #000;
     font-family: Roboto_500Medium;
     font-size: 16px;
     margin-top: 20px;
@@ -26,7 +26,7 @@ export const Input = styled.TextInput`
 
 export const Button = styled.TouchableOpacity`
     align-items: center;
-    background-color: #F6E125;
+    background-color: rgb(152, 202, 63);
     border-radius: 5px;
     margin-top: 20px;
     padding: 8px;
@@ -34,20 +34,20 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-    color: #2F48D4;
+    color: #000;
     font-family: Roboto_500Medium;
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
 `;
 
-export const TranslateArea = styled.View`
+export const ProductArea = styled.View`
     align-items: center;
     margin-top: 15px;
 `;
 
 export const Text = styled.Text`
-    color: #F6E125;
+    color: #fff;
     font-family: Roboto_500Medium;
     font-size: 18px;
 `;
